@@ -1,10 +1,25 @@
 <?php
 /**
- * Funciones generales que se utilizarán solamente en el panel de administración de wordpress
+ * Funciones generales que se utilizarán solamente en 
+ * el panel de administración de wordpress
+ * php version 7.4.19
+ * 
+ * @category General
+ * @package  GeoChile
+ * @author   Julio Cárdenas <julio@arknite.dev>
+ * @license  https://www.gnu.org/licenses/gpl-3.0.html GPL-3.0
+ * @link     https://arknite.dev/plugins/geo-chile
  */
-function geo_chile_add_admin_page() {
+
+ /**
+  * Funcion encargada de inicializar las paginas del administrador
+  *
+  * @return void
+  */
+function Geo_Chile_Add_Admin_page()
+{
     add_menu_page(
-        __( 'Geo Chile', 'geo_chile' ),
+        __('Geo Chile', 'geo_chile'),
         'Geo Chile',
         'manage_options',
         'geo_chile_slug',
@@ -36,7 +51,6 @@ function geo_chile_add_admin_page() {
         'edit.php?post_type=geo-chile-comuna'
     );
 
-    remove_submenu_page('geo_chile_slug','geo_chile_slug');
+    remove_submenu_page('geo_chile_slug', 'geo_chile_slug');
 }
-add_action( 'admin_menu', 'geo_chile_add_admin_page' );
-?>
+add_action('admin_menu', 'Geo_Chile_Add_Admin_page');
