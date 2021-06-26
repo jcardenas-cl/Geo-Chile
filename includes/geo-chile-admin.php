@@ -93,7 +93,7 @@ function geo_chile_region_admin_columns( $column, $post_id ) {
 add_action( 'manage_geo-chile-region_posts_custom_column', 'geo_chile_region_admin_columns', 10, 2 );
 
 /**
- * Crea y ajusta los nombres de columna en el listado del comunas
+ * Crea y ajusta los nombres de columna en el listado del provincias
  *
  * @param String[] $post_columns Arreglo asociativo con el titulo de las columnas.
  *
@@ -129,10 +129,61 @@ function geo_chile_province_admin_columns( $column, $post_id ) {
 add_action( 'manage_geo-chile-provincia_posts_custom_column', 'geo_chile_province_admin_columns', 10, 2 );
 
 /**
- * Agrega la funcionalidad de ordenar por columnas determinadas en esta funcion
+ * Agrega la funcionalidad de ordenar por region en el listado de provincias
  */
 add_filter(
 	'manage_edit-geo-chile-provincia_sortable_columns', function ( $columns ) {
+		$columns['region'] = 'region';
+		return $columns;
+	}
+);
+
+/**
+ * Crea y ajusta los nombres de columna en el listado del comunas
+ *
+ * @param String[] $post_columns Arreglo asociativo con el titulo de las columnas.
+ *
+ * @return Array Arreglo asociativo con el titulo de columnas modificado
+ */
+function geo_chile_title_communes_admin_columns( $post_columns ) {
+	$post_columns['menu_order'] = 'featured'; // column key => title.
+	return array(
+		'cb'		=> '<input type="checkbox" />',
+		'title'  	=> __( 'Nombre comuna' ),
+		'region' 	=> __( 'Región' ),
+		'province' 	=> __( 'Provincia' ),
+	);
+}
+add_filter( 'manage_geo-chile-comuna_posts_columns', 'geo_chile_title_communes_admin_columns', 10, 1 );
+
+/**
+ * Ajusta el valor de las columnas reales para el post_type de provincias
+ *
+ * @category Admin
+ * @package Admin
+ * @param String[] $column Nombre de la columna.
+ * @param int      $post_id ID del post.
+ * @return void
+ */
+function geo_chile_commune_admin_columns( $column, $post_id ) {
+	switch ( $column ) {
+		case 'region':
+			$region_post_id = get_post_meta( $post_id, 'region', true );
+			echo get_the_title( $region_post_id );
+			break;
+		case 'province':
+			$commune_post_id = get_post_meta( $post_id, 'comuna', true );
+			echo get_the_title( $commune_post_id );
+			break;
+	}
+}
+add_action( 'manage_geo-chile-comuna_posts_custom_column', 'geo_chile_commune_admin_columns', 10, 2 );
+
+/**
+ * Agrega la funcionalidad de ordenar por region en el listado de comunas
+ */
+add_filter(
+	'manage_edit-geo-chile-comuna_sortable_columns', function ( $columns ) {
 		$columns['region'] = 'region';
 		return $columns;
 	}
