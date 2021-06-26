@@ -59,8 +59,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 		 */
 		public static function install() {
 			self::register_post_types();
-			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-init-regiones.php';
-			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-init-provincias.php';
+			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-init-data.php';
 			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-install.php';
 		}
 

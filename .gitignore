@@ -2,3 +2,4 @@
 composer.json
 composer.lock
 grumphp.yml
+_grumphp.yml

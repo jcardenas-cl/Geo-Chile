@@ -79,15 +79,61 @@ add_filter( 'manage_geo-chile-region_posts_columns', 'geo_chile_title_region_adm
  * @category Admin
  * @package Admin
  * @param String[] $column Nombre de la columna.
- * @param int      $post_ID ID del post.
+ * @param int      $post_id ID del post.
  * @return void
  */
-function geo_chile_region_admin_columns( $column, $post_ID ) {
+function geo_chile_region_admin_columns( $column, $post_id ) {
 	switch ( $column ) {
 		case 'short_name':
-			$short_name = get_post_meta( $post_ID, 'abreviatura', true );
+			$short_name = get_post_meta( $post_id, 'abreviatura', true );
 			echo wp_kses( $short_name, '' );
 			break;
 	}
 }
 add_action( 'manage_geo-chile-region_posts_custom_column', 'geo_chile_region_admin_columns', 10, 2 );
+
+/**
+ * Crea y ajusta los nombres de columna en el listado del comunas
+ *
+ * @param String[] $post_columns Arreglo asociativo con el titulo de las columnas.
+ *
+ * @return Array Arreglo asociativo con el titulo de columnas modificado
+ */
+function geo_chile_title_province_admin_columns( $post_columns ) {
+	$post_columns['menu_order'] = 'featured'; // column key => title.
+	return array(
+		'cb'     => '<input type="checkbox" />',
+		'title'  => __( 'Nombre proovincia' ),
+		'region' => __( 'Región' ),
+	);
+}
+add_filter( 'manage_geo-chile-provincia_posts_columns', 'geo_chile_title_province_admin_columns', 10, 1 );
+
+/**
+ * Ajusta el valor de las columnas reales para el post_type de provincias
+ *
+ * @category Admin
+ * @package Admin
+ * @param String[] $column Nombre de la columna.
+ * @param int      $post_id ID del post.
+ * @return void
+ */
+function geo_chile_province_admin_columns( $column, $post_id ) {
+	switch ( $column ) {
+		case 'region':
+			$region_post_id = get_post_meta( $post_id, 'region', true );
+			echo get_the_title( $region_post_id );
+			break;
+	}
+}
+add_action( 'manage_geo-chile-provincia_posts_custom_column', 'geo_chile_province_admin_columns', 10, 2 );
+
+/**
+ * Agrega la funcionalidad de ordenar por columnas determinadas en esta funcion
+ */
+add_filter(
+	'manage_edit-geo-chile-provincia_sortable_columns', function ( $columns ) {
+		$columns['region'] = 'region';
+		return $columns;
+	}
+);
