@@ -103,7 +103,7 @@ function geo_chile_title_province_admin_columns( $post_columns ) {
 	$post_columns['menu_order'] = 'featured'; // column key => title.
 	return array(
 		'cb'     => '<input type="checkbox" />',
-		'title'  => __( 'Nombre proovincia' ),
+		'title'  => __( 'Nombre provincia' ),
 		'region' => __( 'Región' ),
 	);
 }

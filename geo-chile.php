@@ -91,7 +91,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 					'show_in_menu'    => false,
 					'_builtin'        => false,
 					'capability_type' => 'post',
-					'supports'        => array( 'title' ),
+					'supports'        => array( 'title', 'page-attributes', 'thumbnail', 'custom-fields' ),
 					'rewrite'         => false,
 					'query_var'       => false,
 				)
@@ -123,7 +123,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 					'show_in_menu'    => false,
 					'_builtin'        => false,
 					'capability_type' => 'post',
-					'supports'        => array( 'title' ),
+					'supports'        => array( 'title', 'page-attributes', 'thumbnail', 'custom-fields' ),
 					'rewrite'         => false,
 					'query_var'       => false,
 				)
@@ -155,7 +155,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 					'show_in_menu'    => false,
 					'_builtin'        => false,
 					'capability_type' => 'post',
-					'supports'        => array( 'title' ),
+					'supports'        => array( 'title', 'page-attributes', 'thumbnail', 'custom-fields' ),
 					'rewrite'         => false,
 					'query_var'       => false,
 				)

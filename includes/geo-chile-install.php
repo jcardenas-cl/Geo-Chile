@@ -14,11 +14,12 @@ $region_posts = new WP_Query( [ 'post_type' => 'geo-chile-region' ] );
 
 if ( ! $region_posts->have_posts() ) {
 	foreach ( $initial_list_data as $region ) {
-		$args      = [
-			'post_title'   => wp_strip_all_tags( $region['name'] ),
-			'post_status'  => 'publish',
-			'post_content' => '',
-			'post_type'    => 'geo-chile-region',
+		$args = [
+			'post_title'	=> wp_strip_all_tags( $region['name'] ),
+			'post_status'	=> 'publish',
+			'post_content'	=> '',
+			'post_type'		=> 'geo-chile-region',
+			'menu_order'	=> $region['geo_order'],
 		];
 		$region_id = wp_insert_post( $args );
 		if ( ! is_wp_error( $region_id ) ) {
@@ -35,6 +36,22 @@ if ( ! $region_posts->have_posts() ) {
 				$province_id   = wp_insert_post( $args_province );
 				if ( ! is_wp_error( $province_id ) ) {
 					add_post_meta( $province_id, 'region', $region_id );
+					$communes_data = $province['communes'];
+					foreach ( $communes_data as $commune ) {
+						$args_commune = [
+							'post_title'   => wp_strip_all_tags( $commune['name'] ),
+							'post_status'  => 'publish',
+							'post_content' => '',
+							'post_type'    => 'geo-chile-comuna',
+						];
+						$commune_id   = wp_insert_post( $args_commune );
+						if ( ! is_wp_error( $commune_id ) ) {
+							add_post_meta( $commune_id, 'comuna', $province_id );
+							add_post_meta( $commune_id, 'region', $region_id );
+							add_post_meta( $commune_id, 'capital_provincial', $commune['prov_cap'] );
+							add_post_meta( $commune_id, 'capital_regional', $commune['reg_cap'] );
+						}
+					}
 				}
 			}
 		}
