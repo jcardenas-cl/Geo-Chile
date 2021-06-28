@@ -46,7 +46,7 @@ if ( ! $region_posts->have_posts() ) {
 						];
 						$commune_id   = wp_insert_post( $args_commune );
 						if ( ! is_wp_error( $commune_id ) ) {
-							add_post_meta( $commune_id, 'comuna', $province_id );
+							add_post_meta( $commune_id, 'provincia', $province_id );
 							add_post_meta( $commune_id, 'region', $region_id );
 							add_post_meta( $commune_id, 'capital_provincial', $commune['prov_cap'] );
 							add_post_meta( $commune_id, 'capital_regional', $commune['reg_cap'] );

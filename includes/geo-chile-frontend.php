@@ -36,5 +36,14 @@ add_action( 'wp_enqueue_scripts', 'geo_chile_load_scripts' );
 function geo_chile_add_shortcodes() {
 	add_shortcode( 'geo_chile_regiones', 'geo_chile_get_regions' );
 	add_shortcode( 'geo_chile_provincias', 'print_provinces_select' );
+	add_shortcode( 'geo_chile_comunas', 'shortcode_print_communes_select' );
 }
 add_action( 'init', 'geo_chile_add_shortcodes' );
+
+function shortcode_print_communes_select( $attrs ) {
+	$attrs = shortcode_atts( array(
+		'region_id' 	=> null,
+		'province_id'	=> null
+	), $attrs);
+	print_communes_select( $attrs );
+}
