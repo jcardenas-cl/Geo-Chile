@@ -7,48 +7,34 @@
  * @package Core
  */
 
- /**
- * Funcion global que se encarga de retornar mostrar el select con regiones
- *
- * @return void
+/**
+ * Carga de scripts necesarios para el funcionamiento del plugin de cara al usuario final.
  */
-function geo_chile_get_regions() {
-	global $wpdb;
-	$loop = new WP_Query(
-		array(
-			'post_type'      => 'geo-chile-region',
-			'posts_per_page' => 99,
-		)
-	);
-
-	$output  = '<select id="cbo-geo-chile-region" name="cbo-geo-chile-region">';
-	$output .= '<option value="-1">' . __( '- Seleccione una region -', 'geo-chile' ) . '</option>';
-	if ( $loop->have_posts() ) {
-		while ( $loop->have_posts() ) {
-			$loop->the_post();
-			$output .= '<option value="' . get_the_ID() . '">' . get_the_title() . '</option>';
-		}
+function geo_chile_load_scripts() {
+	if ( !wp_script_is( 'jquery' ) ) {
+		wp_enqueue_script( 'jquery' );
 	}
-	$output .= '</select>';
-	echo wp_kses(
-		$output, array(
-			'select' => array(
-				'class' => array(),
-				'name'  => array(),
-				'id'    => array(),
-			),
-			'option' => array(
-				'value' => array(),
-			),
+	wp_enqueue_script( 
+		'geo-chile-script', 
+		plugin_dir_url( __FILE__ ) . '../public/geo-chile-script.js',
+		array( 'jquery' ),
+	);
+	wp_localize_script(
+		'geo-chile-script',
+		'site_config',
+		array(
+			'ajaxurl'	=> admin_url( 'admin-ajax.php' ),
+			'base_url'	=> get_site_url()
 		)
 	);
-	wp_reset_postdata();
 }
+add_action( 'wp_enqueue_scripts', 'geo_chile_load_scripts' );
 
 /**
  * Agrega shortcodes de uso publico en el sitio
  */
 function geo_chile_add_shortcodes() {
 	add_shortcode( 'geo_chile_regiones', 'geo_chile_get_regions' );
+	add_shortcode( 'geo_chile_provincias', 'print_provinces_select' );
 }
 add_action( 'init', 'geo_chile_add_shortcodes' );

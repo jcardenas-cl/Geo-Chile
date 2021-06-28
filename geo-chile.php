@@ -174,6 +174,8 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-region.php';
 			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-provincia.php';
 			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-comuna.php';
+			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-actions.php';
+			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-shared.php';
 			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-frontend.php';
 
 			if ( is_admin() ) {

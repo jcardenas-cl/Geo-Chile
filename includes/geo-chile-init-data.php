@@ -62,7 +62,7 @@ $initial_list_data = array(
 						'reg_cap'  => 0,
 					),
 					array(
-						'name'     => 'Iquique,',
+						'name'     => 'Iquique',
 						'prov_cap' => 1,
 						'reg_cap'  => 1,
 					),
@@ -208,7 +208,7 @@ $initial_list_data = array(
 				),
 			),
 			array(
-				'name'     => 'Huasco,',
+				'name'     => 'Huasco',
 				'communes' => array(
 					array(
 						'name'     => 'Alto del Carmen',

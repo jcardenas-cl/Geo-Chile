@@ -1,0 +1,23 @@
+{
+  "name": "Geo-Chile",
+  "version": "1.0.0",
+  "description": "¿De que se trata?\r ------",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jcardenas-cl/geo-chile.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jcardenas-cl/geo-chile/issues"
+  },
+  "homepage": "https://github.com/jcardenas-cl/geo-chile#readme",
+  "dependencies": {
+    "webpack": "^5.40.0"
+  }
+}
