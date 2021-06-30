@@ -34,16 +34,34 @@ add_action( 'wp_enqueue_scripts', 'geo_chile_load_scripts' );
  * Agrega shortcodes de uso publico en el sitio
  */
 function geo_chile_add_shortcodes() {
-	add_shortcode( 'geo_chile_regiones', 'geo_chile_get_regions' );
-	add_shortcode( 'geo_chile_provincias', 'print_provinces_select' );
+	add_shortcode( 'geo_chile_regiones', 'shortcode_print_regions_select' );
+	add_shortcode( 'geo_chile_provincias', 'shortcode_print_province_select' );
 	add_shortcode( 'geo_chile_comunas', 'shortcode_print_communes_select' );
 }
 add_action( 'init', 'geo_chile_add_shortcodes' );
+
+function shortcode_print_regions_select( $attrs ) {
+	/*
+	$attrs = shortcode_atts( array(
+		'region_id' 	=> null,
+		'province_id'	=> null
+	), $attrs);
+	*/
+	geo_chile_print_region_select( $attrs );
+}
+
+function shortcode_print_province_select( $attrs ) {
+	$attrs = shortcode_atts( array(
+		'region_id' 	=> null,
+		'province_id'	=> null
+	), $attrs);
+	geo_chile_print_province_select( $attrs );
+}
 
 function shortcode_print_communes_select( $attrs ) {
 	$attrs = shortcode_atts( array(
 		'region_id' 	=> null,
 		'province_id'	=> null
 	), $attrs);
-	print_communes_select( $attrs );
+	geo_chile_print_commune_select( $attrs );
 }

@@ -81,9 +81,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 						'view_item'          => __( 'Ver región', 'geo-chile' ),
 						'search_items'       => __( 'Buscar región', 'geo-chile' ),
 						'not_found'          => __( 'No se encontraron regiones', 'geo-chile' ),
-						'not_found_in_trash' => __(
-							'No se encotraron regiones en la papelera', 'geo-chile'
-						),
+						'not_found_in_trash' => __( 'No se encotraron regiones en la papelera', 'geo-chile' ),
 					),
 					'public'          => false,
 					'hierarchical'    => true,
@@ -91,7 +89,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 					'show_in_menu'    => false,
 					'_builtin'        => false,
 					'capability_type' => 'post',
-					'supports'        => array( 'title', 'page-attributes', 'thumbnail', 'custom-fields' ),
+					'supports'        => array( 'title', 'page-attributes', 'thumbnail' ),
 					'rewrite'         => false,
 					'query_var'       => false,
 				)
@@ -108,14 +106,8 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 						'new_item'           => __( 'Nueva provincias', 'geo-chile' ),
 						'view_item'          => __( 'Ver provincias', 'geo-chile' ),
 						'search_items'       => __( 'Buscar provincias', 'geo-chile' ),
-						'not_found'          => __(
-							'No se encontraron provincias',
-							'geo-chile'
-						),
-						'not_found_in_trash' => __(
-							'No se encotraron provincias en la papelera',
-							'geo-chile'
-						),
+						'not_found'          => __( 'No se encontraron provincias', 'geo-chile' ),
+						'not_found_in_trash' => __( 'No se encotraron provincias en la papelera', 'geo-chile' ),
 					),
 					'public'          => false,
 					'hierarchical'    => true,
@@ -123,7 +115,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 					'show_in_menu'    => false,
 					'_builtin'        => false,
 					'capability_type' => 'post',
-					'supports'        => array( 'title', 'page-attributes', 'thumbnail', 'custom-fields' ),
+					'supports'        => array( 'title', 'page-attributes', 'thumbnail' ),
 					'rewrite'         => false,
 					'query_var'       => false,
 				)
@@ -140,14 +132,8 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 						'new_item'           => __( 'Nueva comuna', 'geo-chile' ),
 						'view_item'          => __( 'Ver comuna', 'geo-chile' ),
 						'search_items'       => __( 'Buscar comuna', 'geo-chile' ),
-						'not_found'          => __(
-							'No se encontraron comunas',
-							'geo-chile'
-						),
-						'not_found_in_trash' => __(
-							'No se encotraron comunas en la papelera',
-							'geo-chile'
-						),
+						'not_found'          => __( 'No se encontraron comunas', 'geo-chile' ),
+						'not_found_in_trash' => __( 'No se encotraron comunas en la papelera', 'geo-chile' ),
 					),
 					'public'          => false,
 					'hierarchical'    => true,
@@ -155,7 +141,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 					'show_in_menu'    => false,
 					'_builtin'        => false,
 					'capability_type' => 'post',
-					'supports'        => array( 'title', 'page-attributes', 'thumbnail', 'custom-fields' ),
+					'supports'        => array( 'title', 'page-attributes', 'thumbnail' ),
 					'rewrite'         => false,
 					'query_var'       => false,
 				)
@@ -171,11 +157,10 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 
 			add_action( 'init', [ $this, 'register_post_types' ] );
 
-			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-region.php';
-			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-provincia.php';
-			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-comuna.php';
 			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-actions.php';
-			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-shared.php';
+			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-regiones.php';
+			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-provincias.php';
+			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-comunas.php';
 			include_once plugin_dir_path( __FILE__ ) . 'includes/geo-chile-frontend.php';
 
 			if ( is_admin() ) {

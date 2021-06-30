@@ -19,16 +19,14 @@ jQuery( 'document' ).ready( function() {
         } else {
             // en caso que no haya un cbo provincias, se obtendra la lista de comunas, si es que existe el select
             if ( jQuery( '.cbo-geo-chile-comuna' ).size() > 0 ) {
-                jQuery( '.cbo-geo-chile-provincia' ).change( function() {
-                    const province_id = jQuery( this ).val();
-                    jQuery.post( site_config.ajaxurl, {
-                        'action': 'get_commune_list',
-                        'province_id': province_id,
-                    }, function( response ) {
-                        jQuery( '.cbo-geo-chile-comuna' ).html( '<option value="-1">- Seleccione una comuna -</option>' );
-                        response.map( function( item ) {
-                            jQuery( '.cbo-geo-chile-comuna' ).append( `<option value="${item.id}">${item.name}</option>` );
-                        });
+                const region_id = jQuery( this ).val();
+                jQuery.post( site_config.ajaxurl, {
+                    'action': 'get_commune_list',
+                    'region_id': region_id,
+                }, function( response ) {
+                    jQuery( '.cbo-geo-chile-comuna' ).html( '<option value="-1">- Seleccione una comuna -</option>' );
+                    response.map( function( item ) {
+                        jQuery( '.cbo-geo-chile-comuna' ).append( `<option value="${item.id}">${item.name}</option>` );
                     });
                 });
             }
