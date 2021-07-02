@@ -1,7 +1,7 @@
 <?php
 /**
  * Funciones generales que se utilizarán solamente en
- * el panel de administración de WordPress. 
+ * el panel de administración de WordPress.
  *
  * @category General
  * @package  GeoChile
@@ -57,9 +57,9 @@ add_action( 'admin_menu', 'geo_chile_add_admin_page' );
  * Crea y ajusta los nombres de columna en el listado del post_type
  * para el listado de regiones
  *
- * @param String[] $post_columns Arreglo asociativo con el titulo de las columnas.
+ * @param string $post_columns Arreglo asociativo con el titulo de las columnas.
  *
- * @return Array Arreglo asociativo con el titulo de columnas modificado
+ * @return array Arreglo asociativo con el titulo de columnas modificado
  */
 function geo_chile_title_region_admin_columns( $post_columns ) {
 	$post_columns['menu_order'] = 'featured'; // column key => title.
@@ -77,7 +77,7 @@ add_filter( 'manage_geo-chile-region_posts_columns', 'geo_chile_title_region_adm
  *
  * @category Admin
  * @package Admin
- * @param String[] $column Nombre de la columna.
+ * @param string $column Nombre de la columna.
  * @param int      $post_id ID del post.
  * @return void
  */
@@ -85,7 +85,7 @@ function geo_chile_region_admin_columns( $column, $post_id ) {
 	switch ( $column ) {
 		case 'short_name':
 			$short_name = get_post_meta( $post_id, 'abreviatura', true );
-			echo wp_kses( $short_name, '' );
+			echo esc_html( $short_name );
 			break;
 	}
 }
@@ -94,7 +94,7 @@ add_action( 'manage_geo-chile-region_posts_custom_column', 'geo_chile_region_adm
 /**
  * Crea y ajusta los nombres de columna en el listado del provincias
  *
- * @param String[] $post_columns Arreglo asociativo con el titulo de las columnas.
+ * @param string $post_columns Arreglo asociativo con el titulo de las columnas.
  *
  * @return Array Arreglo asociativo con el titulo de columnas modificado
  */
@@ -111,11 +111,9 @@ add_filter( 'manage_geo-chile-provincia_posts_columns', 'geo_chile_title_provinc
 /**
  * Ajusta el valor de las columnas reales para el post_type de provincias
  *
- * @category Admin
  * @package Admin
- * @param String[] $column Nombre de la columna.
- * @param int      $post_id ID del post.
- * @return void
+ * @param string $column Nombre de la columna.
+ * @param int $post_id ID del post.
  */
 function geo_chile_province_admin_columns( $column, $post_id ) {
 	switch ( $column ) {
@@ -128,8 +126,10 @@ function geo_chile_province_admin_columns( $column, $post_id ) {
 add_action( 'manage_geo-chile-provincia_posts_custom_column', 'geo_chile_province_admin_columns', 10, 2 );
 
 /**
- * Declara que la columna es ordenable, y realiza un intento de orde de manera automatica, pero no es 
+ * Declara que la columna es ordenable, y realiza un intento de orde de manera automatica, pero no es
  * 100% confiable.
+ *
+ * @param array $column Arreglo asociativo con los datos de las columnas.
  */
 function geo_chile_province_custom_order( $column ) {
 	$columns['region'] = 'region';
@@ -141,17 +141,17 @@ add_filter( 'manage_edit-geo-chile-provincia_sortable_columns', 'geo_chile_provi
  * Realiza el orden por la columna designada en el administrador, considerar que para lograr esto, se modifica
  * la consulta WP_Query antes de ser ejecutada, tambien permite el orden en base a los metatags del post_type
  * actual, asi que no realiza el order por el post_order de las regiones, sino en base a su ID.
- * 
+ *
  * En este caso se aplica a el orden de los post_types de geo-chile-provincia y geo-chile-comuna.
- * 
- * @param WP_Query $query - Instancia de WP_Query, pasada por referencia
+ *
+ * @param WP_Query $query - Instancia de WP_Query, pasada por referencia.
  */
 function do_sort_provinces_by_column( $query ) {
 	$orderby = $query->get( 'orderby' );
-	if ( 'region' == $orderby ) {
-		$query->set('meta_key', 'region');
-        $query->set('orderby', 'meta_value_num');
-		$query->set('order', $query->get('order'));
+	if ( 'region' === $orderby ) {
+		$query->set( 'meta_key', 'region' );
+        $query->set( 'orderby', 'meta_value_num' );
+		$query->set( 'order', $query->get( 'order' ) );
 	}
 }
 add_action( 'pre_get_posts', 'do_sort_provinces_by_column' );
@@ -159,17 +159,17 @@ add_action( 'pre_get_posts', 'do_sort_provinces_by_column' );
 /**
  * Crea y ajusta los nombres de columna en el listado del comunas
  *
- * @param String[] $post_columns Arreglo asociativo con el titulo de las columnas.
+ * @param array $post_columns Arreglo asociativo con el titulo de las columnas.
  *
- * @return Array Arreglo asociativo con el titulo de columnas modificado
+ * @return array Arreglo asociativo con el titulo de columnas modificado
  */
 function geo_chile_title_communes_admin_columns( $post_columns ) {
 	$post_columns['menu_order'] = 'featured'; // column key => title.
 	return array(
-		'cb'		=> '<input type="checkbox" />',
-		'title'  	=> __( 'Nombre comuna' ),
-		'region' 	=> __( 'Región' ),
-		'province' 	=> __( 'Provincia' ),
+		'cb'        => '<input type="checkbox" />',
+		'title'     => __( 'Nombre comuna' ),
+		'region'    => __( 'Región' ),
+		'province'  => __( 'Provincia' ),
 	);
 }
 add_filter( 'manage_geo-chile-comuna_posts_columns', 'geo_chile_title_communes_admin_columns', 10, 1 );
@@ -177,9 +177,8 @@ add_filter( 'manage_geo-chile-comuna_posts_columns', 'geo_chile_title_communes_a
 /**
  * Ajusta el valor de las columnas reales para el post_type de provincias
  *
- * @category Admin
  * @package Admin
- * @param String[] $column Nombre de la columna.
+ * @param array $column Nombre de la columna.
  * @param int      $post_id ID del post.
  * @return void
  */
@@ -237,37 +236,46 @@ function geo_chile_display_meta_fields() {
 add_action( 'add_meta_boxes', 'geo_chile_display_meta_fields' );
 
 /**
- * Muestra los campos de post meta predefinidos para el post_type geo-chile-region
- * 
- * @param Object $post Datos del post en donde se mostrarán los campos
- * @return void
+ * Muestra los campos de post meta predefinidos para el post_type geo-chile-region.
+ *
+ * @param object $post Datos del post en donde se mostrarán los campos.
  */
 function geo_chile_display_region_metafields( $post ) {
 	$abreviation = get_post_meta( $post->ID, 'abreviatura', true );
 	wp_nonce_field( 'geo_chile_region_nonce', 'meta-box-geo-chile-region' );
-	echo '<label for="txt-abreviation">' . __( 'Abreviatura', 'geo-chile' ) . '</label><br>';
-	echo '<input type="text" name="txt-abreviation" placeholder="EJ: TA" value="' . wp_kses($abreviation, []) . '" />';
+	echo '<label for="txt-abreviation">' . esc_html__( 'Abreviatura', 'geo-chile' ) . '</label><br>';
+	echo '<input type="text" name="txt-abreviation" placeholder="EJ: TA" value="' . esc_html( $abreviation ) . '" />';
 }
 
 /**
- * Muestra los campos de post meta predefinidos para el post_type geo-chile-provincia
+ * Muestra los campos de post meta predefinidos para el post_type geo-chile-provincia.
  * 
- * @param Object $post Datos del post en donde se mostrarán los campos
- * @return void
+ * @param object $post Datos del post en donde se mostrarán los campos.
  */
 function geo_chile_display_province_metafields( $post ) {
 	$region = get_post_meta( $post->ID, 'region', true );
 	wp_nonce_field( 'geo_chile_provincia_nonce', 'meta-box-geo-chile-provincia' );
-	echo '<label for="txt-abreviation">' . __( 'Región', 'geo-chile' ) . '</label><br>';
-	geo_chile_print_region_select( array( 'selected' => $region, 'placeholder' => 'Seleccione' ) );
+	echo '<label for="txt-abreviation">' . esc_html__( 'Región', 'geo-chile' ) . '</label><br>';
+	geo_chile_print_region_select( array( 
+		'selected' => $region,
+		'placeholder' => 'Seleccione'
+		)
+	);
 }
 
+/**
+ * Muestra los campos preestablecidos de la comuna para ser editados.
+ * 
+ * @param object $post Objecto con el post siendo editado.
+ */
 function geo_chile_display_commune_metafields( $post ) {
-	$region 	= get_post_meta( $post->ID, 'region', true );
-	$province	= get_post_meta( $post->ID, 'provincia', true );
+	$region 		= get_post_meta( $post->ID, 'region', true );
+	$province		= get_post_meta( $post->ID, 'provincia', true );
+	$regional_cap	= get_post_meta( $post->ID, 'capital_regional', true );
+	$provincial_cap	= get_post_meta( $post->ID, 'capital_provincial', true );
 
 	wp_nonce_field( 'geo_chile_comuna_nonce', 'meta-box-geo-chile-comuna' );
-	echo '<label for="txt-abreviation">' . __( 'Región', 'geo-chile' ) . '</label><br>';
+	echo '<label for="cbo-geo-chile-region">' . esc_html__( 'Región', 'geo-chile' ) . '</label><br>';
 	geo_chile_print_region_select(
 		array(
 			'selected'		=> $region,
@@ -275,7 +283,7 @@ function geo_chile_display_commune_metafields( $post ) {
 		)
 	);
 	echo '<br>';
-	echo '<label for="txt-abreviation">' . __( 'Provincia', 'geo-chile' ) . '</label><br>';
+	echo '<label for="cbo-geo-chile-provincia">' . esc_html__( 'Provincia', 'geo-chile' ) . '</label><br>';
 	geo_chile_print_province_select(
 		array(
 			'selected'		=> $province,
@@ -283,44 +291,67 @@ function geo_chile_display_commune_metafields( $post ) {
 			'load_id'		=> $region,
 		)
 	);
-	echo '<br>';
-	echo '<label for="txt-abreviation">' . __( 'Es capital regional', 'geo-chile' ) . '</label><br>';
-	echo '<br>';
-	echo '<label for="txt-abreviation">' . __( 'Es capital provincial', 'geo-chile' ) . '</label><br>';
+	?>
+	<br>
+	<?php echo esc_html__( 'Es capital regional', 'geo-chile' ) . '<br>'; ?>
+	<input
+		type="radio"
+		name="rd-geo-chile-regional-cap"
+		<?php echo ( 1 === $regional_cap ) ? 'checked' : ''; ?>
+		value="1" /> <label for="rd-geo-chile-regional-cap">Sí</label>
+
+	<input
+		type="radio"
+		name="rd-geo-chile-regional-cap"
+		<?php echo ( 1 !== $regional_cap ) ? 'checked' : ''; ?>
+		value="0" /> <label for="rd-geo-chile-regional-cap">No</label>
+	<br>
+	<?php echo esc_html__( 'Es capital provincial', 'geo-chile' ); ?><br>
+	<input
+		type="radio"
+		name="rd-geo-chile-provincial-cap"
+		<?php echo ( 1 === $provincial_cap ) ? 'checked' : ''; ?>
+		value="1" /> <label for="rd-geo-chile-provincial-cap">Sí</label>
+
+	<input
+		type="radio"
+		name="rd-geo-chile-provincial-cap"
+		<?php echo ( $provincial_cap != 1 ) ? 'checked' : ''; ?>
+		value="0" /> <label for="rd-geo-chile-provincial-cap">No</label>
+<?php
 }
 
 /**
  * Función que se ejecuta al guardar un post, en caso de ser de un post_type correspondiente al plugin,
  * ejecuta el guardado de post_meta correspondiente.
  * 
- * @param int $post_id ID del post
+ * @param int $post_id ID del post.
+ * @param object $post Objecto con el post siendo editado.
  */
-function get_chile_save_post_meta_switcher( $post_id ) {
-	global $post;
-	/** No se guarda el post_meta en caso de que sea autosave */
+function get_chile_save_post_meta_switcher( $post_id, $post ) {
+	// No se guarda el post_meta en caso de que sea autosave
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
 	}
-	/** Si no tiene permisos para guardar, no se continua con el guardado del postmeta */
-	if ( !current_user_can( 'edit_post' ) ) {
+	// Si no tiene permisos para guardar, no se continua con el guardado del postmeta
+	if ( !current_user_can( 'edit_posts' ) ) {
 		return;
 	}
-	/** Si cumple con los requisitos mínimos, se continua con el guardado, dependiendo del post_type */
-	if ( $post->post_type == 'geo-chile-region' ) {
+	// Si cumple con los requisitos mínimos, se continua con el guardado, dependiendo del post_type
+	if ( 'geo-chile-region' === $post->post_type ) {
 		save_region_post_meta( $post_id );
-	} elseif ( $post->post_type == 'geo-chile-provincia' ) {
+	} elseif ( 'geo-chile-provincia' === $post->post_type ) {
 		save_province_post_meta( $post_id );
-	} elseif ( $post->post_type == 'geo-chile-provincia' ) {
+	} elseif ( 'geo-chile-comuna' === $post->post_type ) {
 		save_commune_post_meta( $post_id );
 	}
 }
-add_action( 'save_post', 'get_chile_save_post_meta_switcher' );
+add_action( 'save_post', 'get_chile_save_post_meta_switcher', 10, 2 );
 
 /**
- * Guarda los campos pre establecidos de la región
+ * Guarda los campos pre establecidos de la región.
  * 
- * @param int $post_id ID del post
- * @return void
+ * @param int $post_id ID del post.
  */
 function save_region_post_meta( $post_id ) {
 	if (
@@ -373,5 +404,11 @@ function save_commune_post_meta( $post_id ) {
 	}
 	if ( isset( $_POST['cbo-geo-chile-provincia'] ) ) {
 		update_post_meta( $post_id, 'provincia', $_POST['cbo-geo-chile-provincia'] );
+	}
+	if ( isset( $_POST['rd-geo-chile-regional-cap'] ) ) {
+		update_post_meta( $post_id, 'capital_regional', $_POST['rd-geo-chile-regional-cap'] );
+	}
+	if ( isset( $_POST['rd-geo-chile-provincial-cap'] ) ) {
+		update_post_meta( $post_id, 'capital_provincial', $_POST['rd-geo-chile-provincial-cap'] );
 	}
 }

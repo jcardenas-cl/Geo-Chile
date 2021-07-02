@@ -6,7 +6,7 @@
  * @package Installation
  *
  * @author   Julio Cárdenas <julio@arknite.dev>
- * @license  https://www.gnu.org/licenses/gpl-3.0.html GPL-3.0
+ * @license  https://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://arknite.dev/plugins/geo-chile
  */
 

@@ -1,12 +1,11 @@
 <?php
 /**
  * Lista inicial con las regiones de país
- * php version 7.4.19
  *
  * @category Install
  * @package  Install
  * @author   Julio Cárdenas <julio@arknite.dev>
- * @license  https://www.gnu.org/licenses/gpl-3.0.html GPL-3.0
+ * @license  https://www.gnu.org/licenses/gpl-3.0.html
  * @link     https://arknite.dev/plugins/geo-chile
  */
 
@@ -14,7 +13,7 @@
 Plugin Name: Geo Chile
 Plugin URI: https://arknite.dev/plugins/geo-chile
 Description: Un sencillo plugin con una lista de regiones, provincias y comunas.
-Version: 0.1
+Version: 0.8
 Author: Julio Cárdenas
 Author URI: https://arknite.dev
 Text Domain: geo-chile
@@ -33,7 +32,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 	 * @category Install
 	 * @package  Install
 	 * @author   Julio Cárdenas <julio@arknite.dev>
-	 * @license  https://www.gnu.org/licenses/gpl-3.0.html GPL-3.0
+	 * @license  https://www.gnu.org/licenses/gpl-3.0.html
 	 * @link     https://arknite.dev/plugins/geo-chile
 	 */
 	class Geo_Chile {
@@ -89,7 +88,7 @@ if ( ! class_exists( 'Geo_Chile' ) ) :
 					'show_in_menu'    => false,
 					'_builtin'        => false,
 					'capability_type' => 'post',
-					'supports'        => array( 'title', 'page-attributes', 'thumbnail' ),
+					'supports'        => array( 'title', 'page-attributes', 'thumbnail', 'custom-fields' ),
 					'rewrite'         => false,
 					'query_var'       => false,
 				)
